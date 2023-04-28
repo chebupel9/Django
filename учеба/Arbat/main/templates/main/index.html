@@ -1,0 +1,330 @@
+{% load static %}
+
+
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UFT-8"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon16x16.png">
+        <title>Главная</title>
+<!--CSS-->
+        <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+<!-- подключение фреймворка стилей bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<!--google-Шрифты-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&family=Open+Sans&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-0 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+              <object type="image/svg+xml" data="logo.svg">
+                <img src="{% static 'main/img/logo.png' %}" alt="Arbat" >
+              </object>
+          </a>
+    
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Услуги</a></li>
+            <li><a href="{% url 'news_home' %}" class="nav-link px-2 link-dark">Новости</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">FAQ</a></li>
+            <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">О нас</a></li>
+          </ul>
+            {% if user.is_authenticated %}
+            <div class="col-md-3 text-end">
+<!--            <a href="accounts/logout/"><button type="button" class="btn btn-outline-dark me-2">Выйти</button></a>-->
+                <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#profilemodal">Профиль</button>
+                <a href="{% url 'order_home' %}"> <button type="button" class="btn btn-dark">Мои заказы</button></a>
+          </div>
+            {% else %}
+          <div class="col-md-3 text-end">
+            <a href="accounts/login/"><button type="button" class="btn btn-outline-dark me-2">Войти</button></a>
+              <a href="accounts/signup/"><button type="button" class="btn btn-dark">Регистрация</button></a>
+          </div>
+            {% endif %}
+        </header>
+      </div>
+<style>
+    .carousel-item img {
+	filter: brightness(60%)
+}
+    .row {
+    --bs-gutter-x: 1.5rem;
+    --bs-gutter-y: 0;
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: calc(-1 * var(--bs-gutter-y));
+    margin-right: calc(-.5 * var(--bs-gutter-x));
+    margin-left: calc(-.5 * var(--bs-gutter-x));
+}
+    .dark-img {
+   filter: brightness(50%)
+}
+
+
+</style>
+<!--modal window-->
+    <div class="modal fade" id="profilemodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Профиль</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body">
+        <h5><strong>@username:</strong> {{ user.username }}</h5>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Закрыть</button>
+          <form method="post" action="{% url 'account_logout' %}">
+  {% csrf_token %}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+  {% endif %}
+  <button type="submit" class="btn btn-dark">{% trans 'Выйти из аккаунта' %}</button>
+</form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<section class="mb-6">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{% static 'main/img/slider-1.jpg '%}" class="d-block w-100" width="50%" height="50%" alt="slider-1">
+            <div class="carousel-caption d-none d-md-block text-left">
+            <h2 class=""><strong>Воплощаем любые пожелания</strong></h2>
+            <h5 class="text-left">и создаем яркую, привлекательную, упаковку для ваших товаров, <strong>используя передовые технологии и современные виды отделки</strong></h5>
+            </div>
+
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'main/img/slider-2.jpg '%}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block text-left">
+            <h2><strong>Работаем со всеми видами продукции</strong></h2>
+            <h5 class="text-left">от фармацевтики и парфюмерии до кондитерских изделий и товаров народного потребления</h5>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{% static 'main/img/slider-3.jpg '%}" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block text-left">
+            <h2><strong>Упаковываем заказ по вашим требованиям</strong></h2>
+            <h5 class="text-left">и оставляем на ответственном хранении, ели вам это нужно</h5>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden"></span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden"></span>
+        </a>
+      </div>
+</section>
+
+      <main>
+<section>
+    <h1 class="text-center mt-5 mb-3"><strong>С нами очень выгодно работать</strong></h1>
+    <h5 class="text-center lead mt-3"><strong>Вот далеко не весь перечень преимуществ:</strong></h5>
+    <div class="container px-4 py-5">
+          <div class="p-5 mb-4 bg-light rounded-3">
+      <div class="container-fluid py-5">
+        <h1 class="display-5 fw-bold">Гарантия качества</h1>
+        <p class="col-md-8 fs-4">Уже более 10 лет мы оправдываем доверие наших клиентов, нас рекомендуют ведущие
+компании в различных областях, и мы готовы предложить самое лучшее для вас</p>
+        <button class="btn btn-dark btn-lg" type="button">Подробнее</button>
+      </div>
+    </div>
+         <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-white bg-dark rounded-3">
+          <h2>Гарантия цены</h2>
+          <p>Ваш проект получит весь необходимый комплекс рекламных мероприятий по доступной
+стоимости. Мы предлагаем самые выгодные условия сотрудничества</p>
+          <button class="btn btn-outline-light" type="button">Подробнее</button>
+        </div>
+      </div>
+      <div class="col-md-6">
+           <div class="h-100 p-5 bg-light border rounded-3">
+          <h2>Персональный менеджер</h2>
+          <p>Гарантируем высокий уровень сервиса и индивидуальный подход - внимательный и заботливый персональный менеджер решит все вопросы, возникающие в ходе работы</p>
+          <button class="btn btn-outline-secondary" type="button">Подробнее</button>
+        </div>
+      </div>
+    </div>
+        </div>
+</section>
+
+          <section class="bg-light">
+          <div class="container px-4 py-5" id="custom-cards">
+
+<h1 class="text-center mb-3"><strong>Почему нам доверяют?</strong></h1>
+    <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+      <div class="col">
+        <div class="card text-bg-dark">
+  <img src="{% static 'main/img/card-1.jpg '%}" class="card-img dark-img" alt="card-1">
+  <div class="card-img-overlay my-5">
+    <h4 class="card-title text-light my-5 mb-3">Круглосуточное производство</h4>
+    <p class="card-text text-light">Работаем в выходные, праздничные дни и сверхурочно по предварительной договоренности</p>
+  </div>
+</div>
+      </div>
+
+      <div class="col">
+        <div class="card text-bg-dark">
+  <img src="{% static 'main/img/card-2.jpg '%}" class="card-img dark-img" alt="card-2">
+  <div class="card-img-overlay my-5">
+    <h4 class="card-title text-light my-5 mb-3">Особые условия для постоянных клиентов</h4>
+    <p class="card-text text-light">Скидки, работа без предоплаты, беспроцентная рассрочка</p>
+
+  </div>
+</div>
+      </div>
+
+      <div class="col">
+        <div class="card text-bg-dark">
+  <img src="{% static 'main/img/card-3.jpg '%}" class="card-img dark-img" alt="card-3">
+  <div class="card-img-overlay my-5">
+    <h4 class="card-title text-light my-5 mb-3">Бесплатная доставка</h4>
+    <p class="card-text text-light">При заказе большого тиража мы сами доставим его по вашему адресу</p>
+
+  </div>
+</div>
+      </div>
+    </div>
+  </div>
+          </section>
+
+
+
+          <section class="container px-4 py-5">
+
+<h1 class="text-center mb-3"><strong>Работаем на отличном полиграфическом оборудовании</strong></h1>
+              <h5 class="text-center lead mt-2"><strong>В активе более 50 единиц печатных, послепечатных</strong></h5>
+              <h5 class="text-center lead mb-5"><strong>и отделочных машин. ТОПовые из них:</strong></h5>
+              <br>
+              <div class="row featurette ">
+      <div class="col-md-7 ">
+        <h2 class="featurette-heading fw-normal lh-1c mt-5">Офсетная машина
+            Komori Lithrone 29</h2><h5 class="lead text-muted">Maшины paсcчитaны нa мнoгoлeтнюю интeнcивнyю экcплyaтaцию и xapaктepизyютcя нeпpeвзoйдeнным кaчecтвoм пeчaти, нaдeжнocтью и эффeктивнocтью.</h5>
+      </div>
+      <div class="col-md-5">
+        <img src="{% static 'main/img/ofsset.jpg '%}" class="card-img" alt="card-3">
+
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading fw-normal lh-1 mt-5">Konica Minolta bizhub C224e</h2>
+        <h5 class="lead text-muted">Цветные МФУ со скоростью печати 22 стр/мин.
+В соотношении "цена/качество" Bizhub C224e не имеет аналогов на рынке цветной цифровой печати.</h5>
+      </div>
+      <div class="col-md-5 order-md-1">
+       <img src="{% static 'main/img/ofsset-2.jpg '%}" class="card-img" alt="card-3">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading fw-normal lh-1 mt-5">Konica Minolta bizhub PRESS C6000</h2>
+        <h5 class="lead text-muted">Цветная цифровая печать скоростью 60 полноцветных отпечатков в минуту.
+Великолепное качество изображений, точность и надежная цветопередача с разрешением 1200x1200dpi.</h5>
+      </div>
+      <div class="col-md-5">
+        <img src="{% static 'main/img/ofsset-3.jpg '%}" class="card-img" alt="card-3">
+      </div>
+    </div>
+          </section>
+
+                    <section class="bg-light">
+              <div class="container text-center">
+                  <br>
+                  <br>
+                  <h1 class="text-center mb-5"><strong>Всегда готовы к оперативному выполнению заказов</strong></h1>
+  <div class="row align-items-start">
+    <div class="col">
+      <h2 class="mb-5">Услуги типографии <img src="{% static 'main/img/check-mark-svgrepo-com.svg' %}" width="30"></h2>
+        <h5 class="lead">Полноцветная цифровая печать</h5>
+        <h5 class="lead">Офсетная печать</h5>
+        <h5 class="lead">Черно-белая печать</h5>
+        <h5 class="lead">Копирование</h5>
+        <h5 class="lead">Сканирование</h5>
+        <h5 class="lead">Тиражирование на ризографе</h5>
+        <h5 class="lead">Интерьерная печать</h5>
+        <h5 class="lead">Печать на дизайнерском картоне</h5>
+        <h5 class="lead">Сублимационная печать</h5>
+        <h5 class="lead">Тампопечать</h5>
+        <h5 class="lead">Печать на металле</h5>
+        <h5 class="lead">Лазерная гравировка</h5>
+        <h5 class="lead">Изготовление эксклюзивной сувенирной продукции</h5>
+        <h5 class="lead">Широкоформатная печать баннеров</h5>
+    </div>
+    <div class="col">
+      <h2 class="mb-5">Послепечатные работы <img src="{% static 'main/img/check-mark-svgrepo-com.svg' %}" width="30"></h2>
+        <h5 class="lead">Гильотинная резка</h5>
+        <h5 class="lead">Резка роликовым резаком</h5>
+        <h5 class="lead">Биговка</h5>
+        <h5 class="lead">Перфорация</h5>
+        <h5 class="lead">Брошюровка металлической пружиной</h5>
+        <h5 class="lead">Брошюровка пластиковой пружиной</h5>
+        <h5 class="lead">Термоклеевой переплёт</h5>
+        <h5 class="lead">Ламинирование пакетное</h5>
+        <h5 class="lead">Ламинирование рулонное</h5>
+        <h5 class="lead">Степлирование</h5>
+        <h5 class="lead">Фольгирование</h5>
+        <h5 class="lead">Плоттерная резка</h5>
+        <h5 class="lead">Установка люверсов</h5>
+        <h5 class="lead">Твердый переплёт дипломных и курсовых</h5>
+    </div>
+  </div>
+  </div>
+                        <br>
+          </section>
+
+
+          <section class="container px-4 py-5">
+              <h1 class="text-center mb-5"><strong>Итак, вам необходимо что-то напечатать?</strong></h1>
+              <h5 class="text-center lead mt-3 mb-5"><strong>Оставьте заявку нашему менеджеру</strong></h5>
+              <div class="card mb-3" >
+  <div class="row align-items-start">
+    <div class="col-md-8 my-4">
+      <div class="card-body">
+        <h3 class="card-title">Свяжитесь с нами прямо сейчас и мы предложим оптимальный вариант печати вашей продукции</h3>
+      </div>
+    </div>
+      <div class="col-md-3 my-4">
+          <div class="card-body">
+          <img src="{% static 'main/img/right.svg' %}" width="70"> <a href="{% url 'create' %}"><button type="button" class="btn btn-dark btn-lg">Оставить заявку</button></a>
+          </div>
+      </div>
+  </div>
+
+</div>
+          </section>
+
+
+      </main>
+      <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <p>© 2016 - 2022 Arbat, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
+        </div>
+      </footer>
+</html>

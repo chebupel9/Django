@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block not_aut_head %}
+    <head>
+        <meta charset="UFT-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon16x16.png">
+        <title>Главная</title>
+<!--CSS-->
+        <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+<!-- подключение фреймворка стилей bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<!--google-Шрифты-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&family=Open+Sans&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-0 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+              <object type="image/svg+xml" data="logo.svg">
+                <img src="{% static 'main/img/logo.png' %}" alt="Arbat" >
+              </object>
+          </a>
+
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Услуги</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Новости</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">FAQ</a></li>
+            <li><a href="about" class="nav-link px-2 link-dark">О нас</a></li>
+          </ul>
+
+          <div class="col-md-3 text-end">
+            <a href="account/login/"><button type="button" class="btn btn-outline-dark me-2">Войти</button></a>
+            <button type="button" class="btn btn-dark">Зарегистрироваться</button>
+          </div>
+        </header>
+    {% endblock %}
+    {% block auth_head %}
+    <head>
+        <meta charset="UFT-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/png" sizes="32x32" href="images/favicon32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="images/favicon16x16.png">
+        <title>Главная</title>
+<!--CSS-->
+        <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+<!-- подключение фреймворка стилей bootstrap-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css" integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+<!--google-Шрифты-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&family=Open+Sans&family=Roboto+Mono:wght@300&display=swap" rel="stylesheet">
+    </head>
+
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-0 border-bottom">
+          <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+              <object type="image/svg+xml" data="logo.svg">
+                <img src="{% static 'main/img/logo.png' %}" alt="Arbat" >
+              </object>
+          </a>
+
+          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="" class="nav-link px-2 link-secondary">Главная</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Услуги</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">Новости</a></li>
+            <li><a href="" class="nav-link px-2 link-dark">FAQ</a></li>
+            <li><a href="about" class="nav-link px-2 link-dark">О нас</a></li>
+          </ul>
+        </header>
+    {% endblock %}
+
+<body>
+{% block content %}
+{% endblock %}
+</body>
+</html>
